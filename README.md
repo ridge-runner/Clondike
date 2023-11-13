@@ -5,7 +5,7 @@ See notes in source file.
 
 Author: Brett Vandyke
 
-## How to Play
+## GAME RULES
 
 ### Object of the Game
 The goal is to get the four suits built onto the foundations from aces up through kings.
@@ -30,6 +30,17 @@ Only a king may fill an open space in the layout. The player turns up cards from
 * game_logic.h : Game rules
 * deck.h : contains the structures for card, deck, draw and shuffle functions.
 * deck.c : Implements the structures and functions in deck.h
+
+
+## HOW TO PLAY THE GAME
+### UI OPTIONS
+* q: quit program
+* s: Move card from stock to waste
+* w: Move from waste to tableau
+* f: Move from waste to foundation
+* t: Move within tableau
+* m: Move from tableau to foundation
+* x: Flip tableau card
 
 
 
