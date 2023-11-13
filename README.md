@@ -25,11 +25,11 @@ Only a king may fill an open space in the layout. The player turns up cards from
 ## PROGRAM STRUCTURE
 
 ### File List
-main.c : contains the game loop and UI logic
-game_logic.c : Implementations of functions
-game_logic.h : Game rules
-deck.h : contains the structures for card, deck, draw and shuffle functions.
-deck.c : Implements the structures and functions in deck.h
+* main.c : contains the game loop and UI logic
+* game_logic.c : Implementations of functions
+* game_logic.h : Game rules
+* deck.h : contains the structures for card, deck, draw and shuffle functions.
+* deck.c : Implements the structures and functions in deck.h
 
 
 
