@@ -11,20 +11,36 @@
 
 // <DONE> 1. Init ncurses mode & setup I/O settings.
 // <DONE> 2. card & deck functions: shuffling, dealing
-// <STARTED> 3. Logic: Implement rules of Klodike. How cards shift piles, illegal moves
-// 4. UI: ncurses functions to create a UI - display cards, player I/O, refresh
-// <STARTED> 5. Main Loop: update UI based on User interactions.
+// <DONE> 3. Logic: Implement rules of Klodike. How cards shift piles, illegal moves
+// <Working> 4. UI: ncurses functions to create a UI - display cards, player I/O, refresh
+// <Working> 5. Main Loop: update UI based on User interactions.
 // 6. Testing & Debugging: Test each component for function and memory leaks.
 
-// ====================== //
-//      MAIN.C 
-// ====================== //
+
 
 #include <ncurses.h>    // curses is a CLI-based GUI library
 #include <stdbool.h>    // adds boolean datatypes true/false
 #include "deck.h"       // cards and deck structs, functions
 #include "game_logic.h" // how cards behave in game, rules.
+/*
+    DISPLAYS HELP MENU
+*/
 
+
+void display_help() {
+    clear();
+    mvprintw(0, 0, "Klondike Solitaire - Help & Instructions");
+    mvprintw(2, 0, "Keybindings:");
+    mvprintw(3, 0, "'s' - Move from stock to waste");
+    // ... Other instructions ...
+    mvprintw(max_y - 2, 0, "Press any key to return to the game");
+    getch(); // Wait for key press
+    clear();
+}
+
+// ====================== //
+//      MAIN.C 
+// ====================== //
 int main (void) {
 
 /* *******************
@@ -78,6 +94,7 @@ int main (void) {
 
         // Get user input
         ch = getch();
+        bool validMove = false; // Flag to track if a move is valid.
 
         // Process input <TODO: Break UI code into module.>
         switch(ch) {
@@ -121,10 +138,33 @@ int main (void) {
                 flip_tableau_card(&gameState, toIndex - 1);
                 break;
             
-            // <TODO: Add other cases for different actions ...>
+            case 'w': // Example: Move from waste to tableau
+            printw("Move to which tableau pile? ");
+            scanw("%d", &toIndex);
+            validMove = move_waste_to_tableau(&gameState, toIndex - 1);
+            break;
+
             default:
                 break;
         }
+        
+        if (validMove) {
+            // If the move was valid, update and display the game state
+            // Check for any special case updates here (e.g., flipping cards)            
+            check_and_flip_cards(&gameState);
+
+            //Refresh display
+            clear();
+            display_stock(&gameState);
+            display_waste(&gameState);
+            display_tableau(&gameState);
+            display_foundation(&gameState);
+            refresh();
+        }else {
+            printw("Invalid move!\n");
+            refresh();
+        }
+
 
         display_game_state(gameState);
         UserAction action = get_user_action();
